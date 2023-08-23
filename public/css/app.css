@@ -982,6 +982,11 @@ video {
   background-color: rgb(49 46 129 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-indigo-400:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(129 140 248 / var(--tw-bg-opacity));
+}
+
 @media (min-width: 640px) {
 
   .sm\:block {

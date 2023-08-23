@@ -13,7 +13,7 @@ router.get('/categorias/:id', categoria)
 
 // Buscador
 
-router.get('/buscador', buscador)
+router.post('/buscador', buscador)
 
 // Pagina 404
 
