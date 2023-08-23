@@ -1,2 +1,22 @@
+# Comentarios pueden ser añadidos usando el símbolo #
+# Ignorar archivos y carpetas generadas por el sistema operativo y editores
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Ignorar carpetas de dependencias
 node_modules/
 
+# Ignorar archivos generados al construir la aplicación
+/build/
+/dist/
+
+# Ignorar archivos de configuración local
+.env
+
+# Ignorar archivos de respaldo de editor
+*.bak
+*.swp
+
+# Ignorar archivos de registro
+*.log

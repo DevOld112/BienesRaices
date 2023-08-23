@@ -9,14 +9,14 @@ router.get('/', inicio)
 
 // Categorias
 
-router.get('/categoria/:id', categoria)
+router.get('/categorias/:id', categoria)
 
 // Buscador
 
-router.get('/404', buscador)
+router.get('/buscador', buscador)
 
 // Pagina 404
 
-router.post('/buscador', noEncontrado)
+router.get('/404', noEncontrado)
 
 export default router;

@@ -27,38 +27,18 @@ block contenido
         div(id="mapa-inicio" class="h-[500px] mt-5")
 
         section(class="py-5")
-            h2(class="text-center text-4xl font-extrabold pt-10") Casas en venta 
+            h2(class="text-center text-4xl font-extrabold pt-10") Casas en Venta 
 
             div(class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-14")
-                each casa in casas
-                    div(class="bg-white shadow rounded-lg")
-                        img(src=`/uploads/${casa.imagen}`, alt=`imagen de casa ${casa.titulo}` class="object-cover h-72 w-full")
-                        div(class="p-5 space-y-3")
-                            h3(class="text-2xl font-bold text-center")= casa.titulo 
-                            p(class="text-gray-600 text-md font-bold") Habitaciones 
-                                span(class="text-gray-800 font-bold")= casa.habitaciones
-                            p(class="text-gray-600 text-md font-bold") WC  
-                                span(class="text-gray-800 font-bold")= casa.wc
-                            p(class="text-gray-600 text-md font-bold") Precio 
-                                span(class="text-gray-800 font-bold")= casa.precio.nombre
-                            a(href=`/propiedad/${casa.id}` class="bg-indigo-600 w-full text-center block font-bold p-2 uppercase text-white rounded-lg") Ver Propiedad
+                each propiedad in casas
+                    include ./templates/card
 
         section(class="py-5")
-            h2(class="text-center text-4xl font-extrabold pt-10") Departamentos en venta 
+            h2(class="text-center text-4xl font-extrabold pt-10") Departamentos en Venta 
 
             div(class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-14")
-                each departamento in departamentos
-                    div(class="bg-white shadow rounded-lg")
-                        img(src=`/uploads/${departamento.imagen}`, alt=`imagen de casa ${departamento.titulo}` class="object-cover h-72 w-full")
-                        div(class="p-5 space-y-3")
-                            h3(class="text-2xl font-bold text-center")= departamento.titulo 
-                            p(class="text-gray-600 text-md font-bold") Habitaciones 
-                                span(class="text-gray-800 font-bold")= departamento.habitaciones
-                            p(class="text-gray-600 text-md font-bold") WC  
-                                span(class="text-gray-800 font-bold")= departamento.wc
-                            p(class="text-gray-600 text-md font-bold") Precio 
-                                span(class="text-gray-800 font-bold")= departamento.precio.nombre
-                            a(href=`/propiedad/${departamento.id}` class="bg-indigo-600 w-full text-center block font-bold p-2 uppercase text-white rounded-lg") Ver Propiedad
+                each propiedad in departamentos
+                    include ./templates/card
                             
 
 
