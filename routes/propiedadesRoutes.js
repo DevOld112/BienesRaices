@@ -3,6 +3,7 @@ import { admin, crear, guardar, agregarImagen, almacenarImagen, propiedadCreada,
 import { body } from "express-validator";
 import protegerRuta from "../middleware/protegerRuta.js";
 import upload from "../middleware/subirImagen.js";
+import identificarUsuario from "../middleware/identificarUsuario.js";
 
 
 
@@ -80,7 +81,7 @@ router.post('/propiedades/eliminar/:id',
 //Area publica
 
 router.get('/propiedad/:id', 
-
+    identificarUsuario,
     mostrarPropiedad
 
 

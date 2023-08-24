@@ -1,6 +1,7 @@
 import { validationResult } from "express-validator"
 import { unlink } from 'node:fs/promises';
 import { Precio, Categoria, Propiedad} from '../models/index.js'
+import { esVendedor } from "../helpers/index.js";
 
 
 
@@ -392,6 +393,8 @@ const eliminar = async (req, res) => {
 
 const mostrarPropiedad = async(req, res) =>{
 
+    console.log(req.usuario)
+
     const { id } = req.params;
 
     //Comprobar que la propiedad exista
@@ -408,13 +411,13 @@ const mostrarPropiedad = async(req, res) =>{
     }
 
 
-        
-    
 
     res.render('propiedades/mostrar', {
         pagina: 'Propiedades en Venta',
         csrfToken: req.csrfToken(), 
-        propiedad
+        propiedad,
+        usuario: req.usuario,
+        esVendedor: esVendedor(req.usuario?.id, propiedad.usuarioId)
     })
     
 }
