@@ -1,6 +1,6 @@
 import { validationResult } from "express-validator"
 import { unlink } from 'node:fs/promises';
-import { Precio, Categoria, Propiedad} from '../models/index.js'
+import { Precio, Categoria, Propiedad, Mensaje} from '../models/index.js'
 import { esVendedor } from "../helpers/index.js";
 
 
@@ -46,9 +46,6 @@ const admin = async(req, res) =>{
             })
         ])
 
-
-        console.log(total)
-    
     
         res.render('propiedades/admin', {
             pagina: 'Mis Propiedades',
@@ -393,8 +390,6 @@ const eliminar = async (req, res) => {
 
 const mostrarPropiedad = async(req, res) =>{
 
-    console.log(req.usuario)
-
     const { id } = req.params;
 
     //Comprobar que la propiedad exista
@@ -422,6 +417,62 @@ const mostrarPropiedad = async(req, res) =>{
     
 }
 
+const enviarMensaje = async (req, res) =>{
+    
+
+    const { id } = req.params;
+
+    //Comprobar que la propiedad exista
+
+    const propiedad = await Propiedad.findByPk(id, {
+        include: [
+            { model: Categoria, as: 'categoria' },
+            { model: Precio, as: 'precio'}
+        ]
+    });
+
+    if(!propiedad){
+        return res.redirect('/404')
+    }
+
+    // Renderizar los errores
+
+    let resultado = validationResult(req)
+
+    if(!resultado.isEmpty()) {
+
+        return res.render('propiedades/mostrar', {
+                propiedad,
+                pagina: propiedad.titulo,
+                usuario: req.usuario,
+                csrfToken: req.csrfToken(),
+                errores: resultado.array(),
+                esVendedor: esVendedor(req.usuario?.id, propiedad.usuarioId)
+            })
+
+    }
+
+    const { mensaje } = req.body;
+    const { id: propiedadId } = req.params;
+    const { id: usuarioId } = req.usuario
+
+    console.log(req.body)
+    console.log(req.params)
+
+    // Almacenar Mensaje
+
+    await Mensaje.create({
+        mensaje,
+        propiedadId,
+        usuarioId
+        
+    })
+
+    res.redirect('/')
+
+    console.log('Mensaje Enviado')
+
+}
 
 
 export {
@@ -434,5 +485,6 @@ export {
     editar,
     guardarCambios,
     eliminar,
-    mostrarPropiedad
+    mostrarPropiedad,
+    enviarMensaje
 }
