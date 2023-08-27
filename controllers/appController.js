@@ -7,7 +7,7 @@ import { sesion } from "../helpers/index.js"
 
 const inicio = async (req, res) => {
 
-    const [ categorias, precios, casas, departamentos ] = await Promise.all([
+    const [ categorias, precios, casas, departamentos, cabañas ] = await Promise.all([
         Categoria.findAll({raw: true}),
         Precio.findAll({raw: true}),
         Propiedad.findAll({
@@ -39,6 +39,21 @@ const inicio = async (req, res) => {
             order: [
                 ['createdAt', 'DESC']
             ]
+        }),
+        Propiedad.findAll({
+            limit: 3,
+            where: {
+                categoriaId: 5
+            },
+            include: [
+                {
+                    model: Precio,
+                    as: 'precio'
+                }
+            ],
+            order: [
+                ['createdAt', 'DESC']
+            ]
         })
     ])
 
@@ -49,6 +64,7 @@ const inicio = async (req, res) => {
         precios,
         casas,
         departamentos,
+        cabañas,
         csrfToken: req.csrfToken(),
         usuario: req.usuario,
         sesion: sesion(req.usuario?.id)
