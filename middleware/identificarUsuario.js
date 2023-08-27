@@ -5,7 +5,7 @@ const identificarUsuario = async (req, res, next) => {
     
     // Identificar si hay un token
 
-    const {_token } = req.cookies
+    const { _token } = req.cookies
 
     if(!_token){
         req.usuario = null;

@@ -1,9 +1,10 @@
 import express  from "express";
-import { admin, crear, guardar, agregarImagen, almacenarImagen, propiedadCreada, editar, guardarCambios, eliminar, mostrarPropiedad, enviarMensaje, verMensajes } from '../controllers/propiedadesController.js';
+import { admin, crear, guardar, agregarImagen, almacenarImagen, propiedadCreada, editar, guardarCambios, eliminar, mostrarPropiedad, enviarMensaje, verMensajes, perfil } from '../controllers/propiedadesController.js';
 import { body } from "express-validator";
 import protegerRuta from "../middleware/protegerRuta.js";
 import upload from "../middleware/subirImagen.js";
 import identificarUsuario from "../middleware/identificarUsuario.js";
+import { sesion } from "../helpers/index.js";
 
 
 
@@ -104,6 +105,15 @@ router.post('/propiedad/:id',
 router.get('/mensajes/:id', 
     protegerRuta,
     verMensajes
+)
+
+// Perfil de usuario
+
+router.get('/perfil/:id', 
+    identificarUsuario,
+    protegerRuta,
+    perfil,
+    sesion
 )
 
 

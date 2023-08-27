@@ -7,8 +7,6 @@ import { sesion } from "../helpers/index.js"
 
 const inicio = async (req, res) => {
 
-    
-
     const [ categorias, precios, casas, departamentos ] = await Promise.all([
         Categoria.findAll({raw: true}),
         Precio.findAll({raw: true}),

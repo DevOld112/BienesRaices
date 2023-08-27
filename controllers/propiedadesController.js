@@ -4,8 +4,6 @@ import { Precio, Categoria, Propiedad, Mensaje, Usuario} from '../models/index.j
 import { esVendedor, formatearFecha, sesion } from "../helpers/index.js";
 
 
-
-
 const admin = async(req, res) =>{
 
     //Leer el queryString
@@ -57,7 +55,9 @@ const admin = async(req, res) =>{
             paginaActual: Number(paginaActual),
             total,
             offset,
-            limit
+            limit,
+            usuario: req.usuario,
+            sesion: sesion(req.usuario?.id)
         })
         
     } catch (error) {
@@ -512,7 +512,30 @@ const verMensajes = async (req, res) => {
     })
 }
 
+const perfil = async (req, res) =>{
 
+    const { id } = req.params;
+
+    console.log(req.params.id)
+
+    //Validar que el usuario exista
+
+    const usuario = await Usuario.findOne({id: id})
+
+    console.log(usuario.id)
+
+    if(usuario.id != req.params.id) {
+        return res.redirect('/')
+    }
+
+
+    res.render('propiedades/perfil',{
+        pagina: 'Mi Perfil',
+        csrfToken: req.csrfToken(),
+        usuario,
+        sesion: sesion(req.usuario?.id)
+    })
+}
 
 
 export {
@@ -528,4 +551,5 @@ export {
     mostrarPropiedad,
     enviarMensaje,
     verMensajes,
+    perfil
 }
