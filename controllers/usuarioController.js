@@ -12,6 +12,7 @@ const formularioLogin = (req, res) =>{
 }
 
 const autenticar = async (req, res) => {
+
     //Validacion
 
     await check('email').isEmail().withMessage('El Email es Obligatorio').run(req)
@@ -45,7 +46,7 @@ const autenticar = async (req, res) => {
     }
 
 
-    //Confirmado si el usuario esta confirmado
+    //Confirmando si el usuario esta confirmado
 
     if(!usuario.confirmado){
         return res.render('auth/login', {
@@ -396,6 +397,10 @@ const nuevoPassword = async (req, res) =>{
 
 }
 
+// Comprobar Inicio de Sesion
+
+
+
 
 
 export {
@@ -411,5 +416,6 @@ export {
     recuperarPassword,
     comprobarToken,
     nuevoPassword,
-    cerrarSesion
+    cerrarSesion,
+    
 }

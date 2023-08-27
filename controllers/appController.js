@@ -1,7 +1,13 @@
 import { Sequelize } from "sequelize"
 import { Precio, Categoria, Propiedad, Usuario } from "../models/index.js"
+import { sesion } from "../helpers/index.js"
+
+
+
 
 const inicio = async (req, res) => {
+
+    
 
     const [ categorias, precios, casas, departamentos ] = await Promise.all([
         Categoria.findAll({raw: true}),
@@ -39,16 +45,20 @@ const inicio = async (req, res) => {
     ])
 
 
-    res.render('inicio', {
+    return res.render('inicio', {
         pagina: 'Inicio',
         categorias,
         precios,
         casas,
         departamentos,
-        csrfToken: req.csrfToken()
+        csrfToken: req.csrfToken(),
+        usuario: req.usuario,
+        sesion: sesion(req.usuario?.id)
     })
 
 }
+
+
 
 const categoria = async (req, res) => {
 
@@ -75,7 +85,8 @@ const categoria = async (req, res) => {
     res.render('categoria', {
         pagina: `${categoria.nombre}s en Venta`,
         propiedades,
-        csrfToken: req.csrfToken()
+        csrfToken: req.csrfToken(),
+        
     })
 
 
@@ -113,7 +124,7 @@ const buscador = async (req, res) =>{
     res.render('busqueda', {
         pagina: 'Resultados de la Busqueda',
         propiedades,
-        csrfToken: req.csrfToken()
+        csrfToken: req.csrfToken(),
     })
 
 }

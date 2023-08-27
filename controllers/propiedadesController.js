@@ -1,7 +1,8 @@
 import { validationResult } from "express-validator"
 import { unlink } from 'node:fs/promises';
 import { Precio, Categoria, Propiedad, Mensaje, Usuario} from '../models/index.js'
-import { esVendedor, formatearFecha } from "../helpers/index.js";
+import { esVendedor, formatearFecha, sesion } from "../helpers/index.js";
+
 
 
 
@@ -208,8 +209,6 @@ const almacenarImagen = async(req, res, next) => {
 
     try {
 
-        console.log(req.file)
-
         //almacenar la imagen y publicar la propiedad
         propiedad.imagen = req.file.filename
 
@@ -413,7 +412,8 @@ const mostrarPropiedad = async(req, res) =>{
         csrfToken: req.csrfToken(), 
         propiedad,
         usuario: req.usuario,
-        esVendedor: esVendedor(req.usuario?.id, propiedad.usuarioId)
+        esVendedor: esVendedor(req.usuario?.id, propiedad.usuarioId),
+        sesion: sesion(req.usuario?.id)
     })
     
 }
@@ -513,6 +513,8 @@ const verMensajes = async (req, res) => {
 }
 
 
+
+
 export {
     admin,
     crear,
@@ -525,5 +527,5 @@ export {
     eliminar,
     mostrarPropiedad,
     enviarMensaje,
-    verMensajes
+    verMensajes,
 }

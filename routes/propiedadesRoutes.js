@@ -8,6 +8,7 @@ import identificarUsuario from "../middleware/identificarUsuario.js";
 
 
 
+
 const router = express.Router();
 
 router.get('/mis-propiedades', protegerRuta ,admin);
@@ -80,9 +81,11 @@ router.post('/propiedades/eliminar/:id',
 
 //Area publica
 
-router.get('/propiedad/:id', 
+router.get('/propiedad/:id',
+    
     identificarUsuario,
-    mostrarPropiedad
+    mostrarPropiedad,
+    
 
 
 )
