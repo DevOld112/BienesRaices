@@ -20,14 +20,23 @@ router.post('/cerrar-sesion',cerrarSesion)
 
 // Categorias
 
-router.get('/categorias/:id', categoria)
+router.get('/categorias/:id',
+    identificarUsuario, 
+    categoria
+)
 
 // Buscador
 
-router.post('/buscador', buscador)
+router.post('/buscador', 
+    identificarUsuario,
+    buscador
+)
 
 // Pagina 404
 
-router.get('/404', noEncontrado)
+router.get('/404', 
+    identificarUsuario,
+    noEncontrado
+)
 
 export default router;
