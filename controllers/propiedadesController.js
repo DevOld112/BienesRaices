@@ -232,13 +232,23 @@ const almacenarImagen = async(req, res, next) => {
 
 }
 
-const propiedadCreada = (req, res) => {
+const propiedadCreada = async(req, res) => {
+
+    const { id } = req.params;
+
+    console.log(req.params.id)
+
+    //Validar que el usuario exista
+
+    const usuario = await Usuario.findOne({id: id})
+
+    console.log(usuario.id)
 
     res.render('propiedades/propiedad-creada', {
         pagina: 'Propiedad Creada Exitosamente',
         mensaje: 'Gracias, por su confianza',
         csrfToken: req.csrfToken(),
-        usuario: req.usuario,
+        usuario,
         sesion: sesion(req.usuario?.id)
     })
 
@@ -410,7 +420,7 @@ const mostrarPropiedad = async(req, res) =>{
         ]
     });
 
-    if(!propiedad){
+    if(!propiedad || !propiedad.publicado){
         return res.redirect('/404')
     }
 
@@ -549,7 +559,33 @@ const perfil = async (req, res) =>{
 // Modificando estado de la propiedad
 
 const cambiarEstado = async(req, res) => {
-    console.log('Cambiando')
+
+    const { id } = req.params
+
+    //Validar que la propiedad exista
+
+    const propiedad = await Propiedad.findByPk(id)
+
+    if(!propiedad){
+        return res.redirect('/mis-propiedades')
+    }
+
+    //Revisar que quien visita la URL es quien crea la propiedad
+
+    if(propiedad.usuarioId.toString() !== req.usuario.id.toString()){
+        return res.redirect('/mis-propiedades')
+    }
+
+    // Actualizar
+
+    propiedad.publicado = !propiedad.publicado
+
+    await propiedad.save()
+
+    res.json({
+        resultado: 'ok'
+    })
+
 }
 
 
