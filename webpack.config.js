@@ -9,7 +9,8 @@ export default {
         notificaciones: './src/js/notificaciones.js',
         mostrarMapa: './src/js/mostrarMapa.js',
         redireccion: './src/js/redireccion.js',
-        mapaInicio: './src/js/mapaInicio.js'
+        mapaInicio: './src/js/mapaInicio.js',
+        cambiarEstado: './src/js/cambiarEstado.js'
     },
     output: {
     filename: '[name].js',

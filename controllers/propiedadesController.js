@@ -1,7 +1,8 @@
 import { validationResult } from "express-validator"
 import { unlink } from 'node:fs/promises';
 import { Precio, Categoria, Propiedad, Mensaje, Usuario} from '../models/index.js'
-import { esVendedor, formatearFecha, sesion } from "../helpers/index.js";
+import { esVendedor, formatearFecha, sesion } from "../helpers/index.js"
+;
 
 
 const admin = async(req, res) =>{
@@ -82,7 +83,9 @@ const crear = async(req, res) => {
         csrfToken: req.csrfToken(),
         categorias,
         precios,
-        datos:{}
+        datos:{},
+        usuario: req.usuario,
+        sesion: sesion(req.usuario?.id)
     })
 }
 
@@ -177,7 +180,9 @@ const agregarImagen = async(req,res) =>{
     res.render('propiedades/agregar-imagen', {
         pagina: `Agregar Imagen: ${propiedad.titulo}`,
         csrfToken: req.csrfToken(),
-        propiedad
+        propiedad,
+        usuario: req.usuario,
+        sesion: sesion(req.usuario?.id)
     })
 }
 
@@ -232,7 +237,9 @@ const propiedadCreada = (req, res) => {
     res.render('propiedades/propiedad-creada', {
         pagina: 'Propiedad Creada Exitosamente',
         mensaje: 'Gracias, por su confianza',
-        csrfToken: req.csrfToken()
+        csrfToken: req.csrfToken(),
+        usuario: req.usuario,
+        sesion: sesion(req.usuario?.id)
     })
 
 }
@@ -268,7 +275,9 @@ const editar = async(req, res) =>{
         csrfToken: req.csrfToken(),
         categorias,
         precios,
-        datos: propiedad
+        datos: propiedad,
+        usuario: req.usuario,
+        sesion: sesion(req.usuario?.id)
     })
 
 }
@@ -537,6 +546,12 @@ const perfil = async (req, res) =>{
     })
 }
 
+// Modificando estado de la propiedad
+
+const cambiarEstado = async(req, res) => {
+    console.log('Cambiando')
+}
+
 
 export {
     admin,
@@ -551,5 +566,6 @@ export {
     mostrarPropiedad,
     enviarMensaje,
     verMensajes,
-    perfil
+    perfil,
+    cambiarEstado
 }

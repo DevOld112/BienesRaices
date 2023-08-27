@@ -1,5 +1,5 @@
 import express  from "express";
-import { admin, crear, guardar, agregarImagen, almacenarImagen, propiedadCreada, editar, guardarCambios, eliminar, mostrarPropiedad, enviarMensaje, verMensajes, perfil } from '../controllers/propiedadesController.js';
+import { admin, crear, guardar, agregarImagen, almacenarImagen, propiedadCreada, editar, guardarCambios, eliminar, mostrarPropiedad, enviarMensaje, verMensajes, perfil, cambiarEstado } from '../controllers/propiedadesController.js';
 import { body } from "express-validator";
 import protegerRuta from "../middleware/protegerRuta.js";
 import upload from "../middleware/subirImagen.js";
@@ -76,8 +76,13 @@ router.post('/propiedades/eliminar/:id',
 
     protegerRuta,
     eliminar
+)
 
+//Cambiar estado
 
+router.put('/propiedades/:id', 
+    protegerRuta,
+    cambiarEstado
 )
 
 //Area publica
